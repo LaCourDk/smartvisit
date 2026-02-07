@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Smart-Connect | Online Visitkort</title>
-  <meta name="description" content="Smart-Connect visitkort ELC." />
+  <meta name="description" content="Smart-Connect online visitkort for Emil La Cour." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -17,7 +17,7 @@
 
     <section class="card">
       <img class="logo" src="Photos/Logo_ubeskrivelse.png" alt="Smart-Connect logo" />
-      <h1>Smart Connect APS</h1>
+      <h1>Smart-Connect</h1>
       
       <div class="info-grid">
         <div class="info">
@@ -50,7 +50,7 @@
         <a class="btn primary" href="mailto:Emil@smart-connect.dk">Send e-mail</a>
         <a class="btn" href="https://www.smart-connect.dk" target="_blank" rel="noopener">Besøg hjemmeside</a>
         <a class="btn" href="tel:+4535959523">Ring 35 95 95 23</a>
-        <a class="btn" href="contact.vcf" download="Emil-La-Cour.vcf">Tilføj kontakt</a>
+        <a class="btn" href="contact.vcf" download="Emil-La-Cour.vcf" id="download-vcard">Tilføj kontakt</a>
       </div>
 
       <div class="socials">
@@ -60,5 +60,40 @@
       </div>
     </section>
   </main>
+    <script>
+    (function () {
+      const vcardLines = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "N:La Cour;Emil;;;",
+        "FN:Emil La Cour",
+        "ORG:Smart Connect ApS",
+        "TITLE:Drifts Ansvarlig",
+        "TEL;TYPE=WORK,VOICE:+4535101030",
+        "TEL;TYPE=CELL,VOICE:+4535959523",
+        "EMAIL;TYPE=INTERNET,WORK:Emil@smart-connect.dk",
+        "EMAIL;TYPE=INTERNET,WORK:Info@smart-connect.dk",
+        "URL:https://www.smart-connect.dk",
+        "END:VCARD"
+      ];
+
+      const vcardText = vcardLines.join("\r\n") + "\r\n";
+      const link = document.getElementById("download-vcard");
+      if (!link) return;
+
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        const blob = new Blob([vcardText], { type: "text/vcard;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const temp = document.createElement("a");
+        temp.href = url;
+        temp.download = "Emil-La-Cour.vcf";
+        document.body.appendChild(temp);
+        temp.click();
+        temp.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      });
+    })();
+  </script>
 </body>
 </html>
